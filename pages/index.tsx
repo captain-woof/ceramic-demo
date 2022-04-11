@@ -7,6 +7,7 @@ import { useWallet } from "../hooks/useWallet";
 function App() {
   const { connectWallet, isConnected, isConnecting, disconnectWallet, connectModalOpen, showConnectModal, closeConnectModal, signerAddress, viewerId } = useWallet();
   const [name, setName] = useState<string>("");
+  const [anything, setAnything] = useState<string>("");
   const profile = useViewerRecord("basicProfile");
 
   return (
@@ -21,7 +22,7 @@ function App() {
       {isConnected &&
         <>
           <Text marginTop="2" color="gray.500" fontSize="sm" fontWeight="600" aria-label="Wallet address">{signerAddress}</Text>
-          <Text>Your 3ID is {viewerId?.id}</Text>
+          <Text>Your 3ID is <b>{viewerId?.id}</b></Text>
         </>
       }
 
@@ -30,21 +31,41 @@ function App() {
 
       {/* Form */}
       {isConnected &&
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          if (!!profile?.set) {
-            profile.set({
-              name: name
-            });
-          }
-        }}>
-          <FormControl marginTop="8">
-            <FormLabel>Name</FormLabel>
-            <Input value={name} onChange={(e) => { setName(e.target.value); }} variant="filled" placeholder="Your DID name..." />
-          </FormControl>
+        <>
+          <form onSubmit={(e) => {
+            e.preventDefault();
 
-          <Button type="submit" marginTop="4" isLoading={profile.isLoading || profile.isMutating} loadingText="Submitting">Submit</Button>
-        </form>
+            if (!!profile?.set) {
+              if (name !== "") {
+                profile.merge({
+                  name: name
+                });
+              }
+
+              if (anything !== "") {
+                profile.merge({
+                  data: anything
+                });
+              }
+            }
+          }}>
+            <FormControl marginTop="8">
+              <FormLabel>Name</FormLabel>
+              <Input value={name} onChange={(e) => { setName(e.target.value); }} variant="filled" placeholder="Your DID name..." />
+            </FormControl>
+
+            <FormControl marginTop="8">
+              <FormLabel>Anything</FormLabel>
+              <Input value={anything} onChange={(e) => { setAnything(e.target.value); }} variant="filled" placeholder="Anything you'd like to store..." />
+            </FormControl>
+
+            <Button type="submit" marginTop="4" isLoading={profile.isLoading || profile.isMutating} loadingText="Submitting">Submit</Button>
+          </form>
+
+          <Text marginTop="6" color="gray.500" fontWeight="500">
+            Your data is: <b>{JSON.stringify(profile.content)}</b>
+          </Text>
+        </>
       }
 
     </Box>
