@@ -1,0 +1,37 @@
+{
+  "name": "ceramic-demo-backend",
+  "version": "1.0.0",
+  "description": "Backend for my Ceramic demo",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development node main.js",
+    "start": "NODE_ENV=production node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/captain-woof/ceramic-demo.git"
+  },
+  "keywords": [
+    "ceramic"
+  ],
+  "author": "captain-woof <captainwoof.official@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/captain-woof/ceramic-demo/issues"
+  },
+  "homepage": "https://github.com/captain-woof/ceramic-demo#readme",
+  "devDependencies": {
+    "@ceramicnetwork/http-client": "^1.5.7",
+    "@glazed/devtools": "^0.1.6"
+  },
+  "dependencies": {
+    "@glazed/datamodel": "^0.2.0",
+    "@glazed/did-datastore": "^0.2.3",
+    "dids": "^2.4.3",
+    "dotenv": "^16.0.0",
+    "key-did-provider-ed25519": "^1.1.0",
+    "key-did-resolver": "^1.4.4",
+    "uint8arrays": "^3.0.0"
+  }
+}
