@@ -4,7 +4,7 @@ const { Ed25519Provider } = require('key-did-provider-ed25519');
 const { getResolver } = require('key-did-resolver');
 const { fromString } = require('uint8arrays');
 
-const getCeramicNodeUrl = () => (process.env.NODE_ENV === "development" ? "http://localhost:7007" : "testnet-clay");
+const getCeramicNodeUrl = () => (process.env.NODE_ENV === "development" ? "https://ceramic-clay.3boxlabs.com" : "https://gateway.ceramic.network");
 
 const getAuthenticatedDid = async () => {
     // DID_KEY is created with `glaze did:create`.
