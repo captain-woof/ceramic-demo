@@ -17,26 +17,51 @@ const main = async () => {
 
     // Create schema for post
     console.log("[+] Creating Post schema...");
-    const schemaId = await manager.createSchema("post", {
-        $schema: "https://json-schema.org/draft/2020-12/schema",
-        title: "Post",
-        description: "This is a post made by a user using DID",
+    const schemaId = await manager.createSchema("Posts", {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        title: "Posts",
+        description: "This is an object that contains array of posts made by a user using DID",
         type: "object",
         properties: {
-            postTitle: {
-                description: "Title of the post",
-                type: "string"
-            },
-            postText: {
-                description: "Body of the post",
-                type: "string"
+            posts: {
+                title: "PostsArray",
+                description: "Array of all posts",
+                type: "array",
+                items: {
+                    title: "post",
+                    description: "A post made by user",
+                    type: "object",
+                    properties: {
+                        postTitle: {
+                            description: "Title of the post",
+                            type: "string"
+                        },
+                        postText: {
+                            description: "Body of the post",
+                            type: "string"
+                        }
+                    },
+                    "required": [
+                        "postTitle",
+                        "postText"
+                    ]
+                }
             }
         }
     });
     console.log(` > ${manager.getSchemaURL(schemaId)}`);
 
+    // Create definition for Post schema
+    console.log("[+] Creating definition for Post schema...");
+    const definitionId = await manager.createDefinition("post", {
+        name: "Post",
+        description: "Used for posts by users",
+        schema: manager.getSchemaURL(schemaId)
+    });
+    console.log(` > ${definitionId}`);
+
     // Deploy everything
-    console.log("[+] Deploying...")
+    console.log(`[+] Publishing to '${getCeramicNodeUrl()}'...`)
     const model = await manager.toPublished();
 
     // Output model

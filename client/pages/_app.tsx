@@ -3,7 +3,7 @@ import React from 'react'
 import { ChakraProvider } from "@chakra-ui/react";
 import { Web3ReactProvider } from "@web3-react/core";
 import { providers } from "ethers";
-import {Provider as SelfIdProvider} from "@self.id/react";
+import { Provider as SelfIdProvider } from "@self.id/react";
 
 const getLibrary = (provider: any) => (new providers.Web3Provider(provider));
 
